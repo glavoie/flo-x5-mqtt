@@ -1,0 +1,42 @@
+--- Request ---
+GET https://emobility.flo.ca/v3.0/user/sessions
+
+--- Request Headers ---
+Accept:           */*
+
+--- Response Headers ---
+Content-Type:               application/json; charset=utf-8
+
+--- Response Body ---
+[
+    {
+        "amperage": 27.4,
+        "amperageOffer": 30.0,
+        "cost": {
+            "currency": "CAD",
+            "estimatedCost": 0
+        },
+        "durationMs": 17146000,
+        "energyTransferredWh": 11074.69,
+        "id": "514e8314-5e6c-45ab-a3c0-a9ce9e0ae908",
+        "lastRefreshMs": 1701484758893,
+        "restrictions": {
+            "activeRestriction": "NoRestriction",
+            "appliedRestrictions": [],
+            "optOutRestrictions": [],
+            "powerSharingMode": "None"
+        },
+        "sessionState": "Charging",
+        "startDate": "2023-12-01T21:53:31+00:00",
+        "station": {
+            "id": "bee0d412-17c5-4e49-8746-b76d7a3e2e93",
+            "level": "L2",
+            "model": "AddEnergie_SmartHOME_v1",
+            "name": "AAE-00123",
+            "networkId": 0,
+            "parkName": "SmartHome Beta Élargi",
+            "power": 7200
+        },
+        "voltage": 246.0
+    }
+]

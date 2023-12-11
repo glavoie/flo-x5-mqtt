@@ -1,0 +1,19 @@
+--- Request ---
+POST https://emobility.flo.ca/v3.0/stations/bee0d412-17c5-4e49-8746-b76d7a3e2e93/session/start
+
+--- Request Headers ---
+Accept:           */*
+Content-Type:     application/json
+
+
+--- Request Body ---
+{
+    "cardId": "00000000-0000-0000-0000-000000000000"
+}
+
+--- Response Code ---
+200: OK
+
+--- Response Headers ---
+
+--- Response Body ---

@@ -1,0 +1,98 @@
+--- Request ---
+PUT https://emobility.flo.ca/v3.0/user/stations/bee0d412-17c5-4e49-8746-b76d7a3e2e93/configuration 
+
+--- Request Headers ---
+Accept:           */*
+Content-Type:     application/json
+
+
+--- Request Body ---
+{
+    "buzzerOn": false,
+    "nickName": "AAE-00123",
+    "timeZone": -5
+}
+
+--- Response Headers ---
+Content-Type:               application/json; charset=utf-8
+
+--- Response Body ---
+{
+    "associatedUsers": [
+        "username@tld.com"
+    ],
+    "configuration": {
+        "buzzerOn": false,
+        "nickName": "AAE-00123",
+        "timeZone": -5
+    },
+    "configurationStatus": "Failed",
+    "information": {
+        "associationCode": "ABCD-ABCD-ABCD-ABCD",
+        "firmware": "6.4.11",
+        "id": "bee0d412-17c5-4e49-8746-b76d7a3e2e93",
+        "maxCurrent": 30,
+        "model": "AddEnergie_SmartHOME_v1",
+        "name": "AAE-00123"
+    },
+    "powerRestriction": {
+        "activeRestriction": "NoRestriction",
+        "appliedRestrictions": [],
+        "optOutRestrictions": [],
+        "powerSharingMode": "None"
+    },
+    "powerRestrictionSchedule": {
+        "enabled": true,
+        "seasons": [
+            {
+                "periods": [
+                    {
+                        "days": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5
+                        ],
+                        "from": 360,
+                        "maxCurrent": 0,
+                        "to": 540
+                    },
+                    {
+                        "days": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5
+                        ],
+                        "from": 960,
+                        "maxCurrent": 0,
+                        "to": 1200
+                    }
+                ],
+                "startDate": {
+                    "date": 1,
+                    "month": 12
+                }
+            },
+            {
+                "periods": [],
+                "startDate": {
+                    "date": 1,
+                    "month": 4
+                }
+            }
+        ]
+    },
+    "status": {
+        "led": {
+            "blue": 100,
+            "green": 100,
+            "modulationState": "On",
+            "red": 0
+        },
+        "pilotSignalState": "C",
+        "state": "InUse"
+    }
+}

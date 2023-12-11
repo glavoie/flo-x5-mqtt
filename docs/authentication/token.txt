@@ -1,0 +1,18 @@
+POST https://auth.pingone.ca/6cedc65f-98e2-4651-bdb8-88ee4936c9ba/as/token
+
+Request:
+{
+    "code": (authorization code)), 
+    "code_verifier": (code verifier)),
+    "client_id": CLIENT_ID,
+    "grant_type": "authorization_code"
+} 
+
+Response:
+{
+    "access_token": "(access token here)",
+    "token_type": "Bearer",
+    "expires_in": 3600,
+    "refresh_token": "(refresh token here)",
+    "scope": "eMobility:all"
+}

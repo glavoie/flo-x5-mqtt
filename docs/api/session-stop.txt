@@ -1,0 +1,14 @@
+--- Request ---
+POST https://emobility.flo.ca/v3.0/stations/bee0d412-17c5-4e49-8746-b76d7a3e2e93/session/stop
+
+--- Request Headers ---
+Accept:           */*
+
+--- Request Body ---
+
+--- Response Code ---
+200: OK
+
+--- Response Headers ---
+
+--- Response Body ---

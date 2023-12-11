@@ -1,0 +1,36 @@
+GET https://auth.pingone.ca/6cedc65f-98e2-4651-bdb8-88ee4936c9ba/as/resume?flowId=b30b5e6d-8ff1-413d-8932-8224c144f59c
+
+Reponse body:
+{
+    "_links": {
+        "self": {
+            "href": "http://auth.pingone.ca/6cedc65f-98e2-4651-bdb8-88ee4936c9ba/flows/b30b5e6d-8ff1-413d-8932-8224c144f59c"
+        },
+        "signOnPage": {
+            "href": "https://apps.pingone.ca/6cedc65f-98e2-4651-bdb8-88ee4936c9ba/signon/?flowId=b30b5e6d-8ff1-413d-8932-8224c144f59c"
+        }
+    },
+    "_embedded": {
+        "user": {
+            "id": "(user id here)",
+            "username": "(username here)"
+        },
+        "application": {
+            "name": "FLO CA IOS"
+        }
+    },
+    "id": "b30b5e6d-8ff1-413d-8932-8224c144f59c",
+    "environment": {
+        "id": "6cedc65f-98e2-4651-bdb8-88ee4936c9ba"
+    },
+    "session": {
+        "id": "5bc340e4-a9c6-4bbd-8acf-8f2350f82ee7"
+    },
+    "resumeUrl": "https://auth.pingone.ca/6cedc65f-98e2-4651-bdb8-88ee4936c9ba/as/resume?flowId=b30b5e6d-8ff1-413d-8932-8224c144f59c",
+    "status": "COMPLETED",
+    "createdAt": "2023-12-11T00:51:19.607Z",
+    "expiresAt": "2023-12-11T01:06:19.892Z",
+    "authorizeResponse": {
+        "code": "(authorization code here)"
+    }
+}
