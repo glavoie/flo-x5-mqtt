@@ -1,2 +1,5 @@
-# flo-x5-client
-Client library to access flo X5 EV charging station information from flo.ca.
+# flo-x5-mqtt
+Client application to integrate flo X5 EV chargers to HomeAssistant.
+
+- Integrates with flo.ca to capture the data.
+- Published a device per charging station found through MQTT. 
