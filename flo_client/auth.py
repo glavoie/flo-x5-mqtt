@@ -11,11 +11,11 @@ from datetime import datetime, timedelta
 from flo_client.consts import *
 
 class Auth:
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-        self.access_token = None
-        self.access_token_expiry = None
+    def __init__(self, username: str, password: str):
+        self.username: str = username
+        self.password: str = password
+        self.access_token: str = None
+        self.access_token_expiry: datetime = datetime.now()
 
     def get_access_token(self):
         if self.access_token is None or self.is_access_token_expired():
@@ -43,7 +43,7 @@ class Auth:
             return True
         return self.access_token_expiry < datetime.now()
 
-    def __execute_refresh_flow(self, refresh_token):
+    def __execute_refresh_flow(self, refresh_token: str):
         print("Refreshing token...")
 
         # Call the token endpoint

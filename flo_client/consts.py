@@ -1,7 +1,9 @@
 """Constants for the flo X5 client."""
 
 # Base URL for API requests.
-BASE_URL = "https://account.flo.ca"
+BASE_URL = "https://emobility.flo.ca"
+STATIONS_URL = BASE_URL + "/v3.0/user/stations"
+SESSIONS_URL = BASE_URL + "/v3.0/user/sessions"
 
 # Identity provider information and URLs
 ACCOUNT_ID = "6cedc65f-98e2-4651-bdb8-88ee4936c9ba"
@@ -12,3 +14,5 @@ IDP_AUTHORIZE_URL = IDP_BASE_URL + "/authorize"
 IDP_TOKEN_URL = IDP_BASE_URL + "/token"
 
 SCOPE = "eMobility:all"
+
+REFRESH_DELAY_SECS = 60
