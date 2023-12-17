@@ -113,7 +113,6 @@ def update_vehicle_charging_sensor(client, station, session, mqtt_settings, devi
 
 
 def save_last_session_id(session_id: str):
-    # Save the access_token in json format in a file named refresh.json
     with open("./data/last-session", "w") as f:
         f.write(session_id)
 
