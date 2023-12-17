@@ -7,4 +7,4 @@ WORKDIR /app
 COPY main.py /app
 COPY flo_client /app/flo_client
 
-ENTRYPOINT ["python", "main.py"]
+ENTRYPOINT ["python", "-u", "main.py"]

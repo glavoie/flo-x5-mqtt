@@ -21,8 +21,8 @@ class Auth:
         if self.access_token is None or self.is_access_token_expired():
             # Check if refresh token is available
             try:
-                if os.path.exists("refresh.json"):
-                    with open("refresh.json", "r") as f:
+                if os.path.exists("./data/refresh.json"):
+                    with open("./data/refresh.json", "r") as f:
                         refresh_token = json.load(f)
                         if "refresh_token" in refresh_token:
                             self.__execute_refresh_flow(refresh_token["refresh_token"])
@@ -65,7 +65,7 @@ class Auth:
         self.access_token_expiry = datetime.now() + timedelta(seconds=resp_dict["expires_in"])
 
         # Save the access_token in json format in a file named refresh.json
-        with open("refresh.json", "w") as f:
+        with open("./data/refresh.json", "w") as f:
             refresh_token = { "refresh_token": resp_dict["refresh_token"] }
             json.dump(refresh_token, f, indent=4)
 
@@ -117,7 +117,6 @@ class Auth:
         resumeUrl = None
         if resp_dict['status'] == 'COMPLETED':
             resumeUrl = resp_dict["resumeUrl"]
-            print("resumeUrl: ", resumeUrl)
 
         # Call the resumeUrl
         headers = {"Accept": "*/*", "Content-Type": "application/vnd.pingidentity.user.register+json"}
@@ -151,6 +150,6 @@ class Auth:
         self.access_token_expiry = datetime.now() + timedelta(seconds=resp_dict["expires_in"])
     
         # Save the access_token in json format in a file named refresh.json
-        with open("refresh.json", "w") as f:
+        with open("./data/refresh.json", "w") as f:
             refresh_token = {"refresh_token": resp_dict["refresh_token"] }
             json.dump(refresh_token, f, indent=4)

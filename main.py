@@ -94,6 +94,11 @@ def update_vehicle_charging_sensor(client, station, session, mqtt_settings, devi
         vehicle_charging_sensor.on()
 
         if session is not None:
+            if session[SESSION_ID] != get_last_session_id():
+                # New session, reset the energy transferred sensor to avoid duplicate total energy computation.
+                energy_transferred_sensor.set_state(0)
+                save_last_session_id(session[SESSION_ID])
+
             amperage_charging_sensor.set_state(float(session[SESSION_AMPERAGE]))
             amperage_offered_sensor.set_state(float(session[SESSION_AMPERAGE_OFFERED]))
             voltage_sensor.set_state(float(session[SESSION_VOLTAGE]))
@@ -105,7 +110,18 @@ def update_vehicle_charging_sensor(client, station, session, mqtt_settings, devi
         amperage_charging_sensor.set_state(0)
         amperage_offered_sensor.set_state(0)
         voltage_sensor.set_state(0)
-        energy_transferred_sensor.set_state(0)
+
+
+def save_last_session_id(session_id: str):
+    # Save the access_token in json format in a file named refresh.json
+    with open("./data/last-session", "w") as f:
+        f.write(session_id)
+
+def get_last_session_id():
+    if os.path.exists("./data/last-session"):
+        with open("./data/last-session", "r") as f:
+            return f.read()
+    return None
 
 if __name__ == "__main__":
     # Get username and password from command line

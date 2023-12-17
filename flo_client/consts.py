@@ -37,6 +37,7 @@ SESSION_CHARGING = "Charging"
 SESSION_COMPLETED = "Completed"
 
 # Session constants
+SESSION_ID = "id"
 SESSION_AMPERAGE = "amperage"
 SESSION_AMPERAGE_OFFERED = "amperageOffer"
 SESSION_VOLTAGE = "voltage"
