@@ -65,4 +65,23 @@ class FloX5Client:
                 return session
         
         return None
+    
+    def is_station_online(self, station):
+        if station is None:
+            return False
+        
+        return station[STATUS_KEY][STATE_KEY] == STATE_AVAILABLE or station[STATUS_KEY][STATE_KEY] == STATE_INUSE
+    
+    def is_vehicle_connected(self, station):
+        if station is None:
+            return False
+        
+        return station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CONNECTED or \
+            station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CHARGING
+    
+    def is_vehicle_charging(self, station):
+        if station is None:
+            return False
+        
+        return station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CHARGING
 

@@ -30,3 +30,133 @@
         "voltage": 246.0
     }
 ]
+
+
+### Sequence for a new session after /start has been called
+# 1. Start a new session (Not Charging)
+[
+    {
+        "amperage": 0.0,
+        "amperageOffer": 30.0,
+        "cost": {
+            "currency": "CAD",
+            "estimatedCost": 0
+        },
+        "durationMs": 2000,
+        "energyTransferredWh": 0,
+        "id": "8aa2caf8-1925-46e1-a456-bc94d32707d5",
+        "lastRefreshMs": 1702815937774,
+        "restrictions": {
+            "activeRestriction": "NoRestriction",
+            "powerSharingMode": "None"
+        },
+        "sessionState": "NotCharging",
+        "startDate": "2023-12-17T12:25:34+00:00",
+        "station": {
+            "id": "bee0d412-17c5-4e49-8746-b76d7a3e2e93",
+            "level": "L2",
+            "model": "AddEnergie_SmartHOME_v1",
+            "name": "AAE-00123",
+            "networkId": 0,
+            "parkName": "SmartHome Beta Élargi",
+            "power": 7200
+        },
+        "voltage": 241.4
+    }
+]
+
+# 2. Amps pulled, still not charging
+[
+    {
+        "amperage": 1.2,
+        "amperageOffer": 30.0,
+        "cost": {
+            "currency": "CAD",
+            "estimatedCost": 0
+        },
+        "durationMs": 4000,
+        "energyTransferredWh": 0,
+        "id": "8aa2caf8-1925-46e1-a456-bc94d32707d5",
+        "lastRefreshMs": 1702815939807,
+        "restrictions": {
+            "activeRestriction": "NoRestriction",
+            "powerSharingMode": "None"
+        },
+        "sessionState": "NotCharging",
+        "startDate": "2023-12-17T12:25:34+00:00",
+        "station": {
+            "id": "bee0d412-17c5-4e49-8746-b76d7a3e2e93",
+            "level": "L2",
+            "model": "AddEnergie_SmartHOME_v1",
+            "name": "AAE-00123",
+            "networkId": 0,
+            "parkName": "SmartHome Beta Élargi",
+            "power": 7200
+        },
+        "voltage": 240.9
+    }
+]
+
+# 3. Charging (low amp)
+[
+    {
+        "amperage": 1.6,
+        "amperageOffer": 30.0,
+        "cost": {
+            "currency": "CAD",
+            "estimatedCost": 0
+        },
+        "durationMs": 6000,
+        "energyTransferredWh": 0.059328,
+        "id": "8aa2caf8-1925-46e1-a456-bc94d32707d5",
+        "lastRefreshMs": 1702815941840,
+        "restrictions": {
+            "activeRestriction": "NoRestriction",
+            "powerSharingMode": "None"
+        },
+        "sessionState": "Charging",
+        "startDate": "2023-12-17T12:25:34+00:00",
+        "station": {
+            "id": "bee0d412-17c5-4e49-8746-b76d7a3e2e93",
+            "level": "L2",
+            "model": "AddEnergie_SmartHOME_v1",
+            "name": "AAE-00123",
+            "networkId": 0,
+            "parkName": "SmartHome Beta Élargi",
+            "power": 7200
+        },
+        "voltage": 240.9
+    }
+]
+
+# 4. Charging max amp
+[
+    {
+        "amperage": 27.7,
+        "amperageOffer": 30.0,
+        "cost": {
+            "currency": "CAD",
+            "estimatedCost": 0
+        },
+        "durationMs": 10000,
+        "energyTransferredWh": 3.788736,
+        "id": "8aa2caf8-1925-46e1-a456-bc94d32707d5",
+        "lastRefreshMs": 1702815945857,
+        "restrictions": {
+            "activeRestriction": "NoRestriction",
+            "powerSharingMode": "None"
+        },
+        "sessionState": "Charging",
+        "startDate": "2023-12-17T12:25:34+00:00",
+        "station": {
+            "id": "bee0d412-17c5-4e49-8746-b76d7a3e2e93",
+            "level": "L2",
+            "model": "AddEnergie_SmartHOME_v1",
+            "name": "AAE-00123",
+            "networkId": 0,
+            "parkName": "SmartHome Beta Élargi",
+            "power": 7200
+        },
+        "voltage": 238.6
+    }
+]

@@ -16,3 +16,30 @@ IDP_TOKEN_URL = IDP_BASE_URL + "/token"
 SCOPE = "eMobility:all"
 
 REFRESH_DELAY_SECS = 60
+
+# Status constants
+STATUS_KEY = "status"
+
+# Charging station state
+STATE_KEY = "state"
+STATE_AVAILABLE = "Available"
+STATE_INUSE = "InUse"
+
+# Vehicle state
+PILOT_STATE_KEY = "pilotSignalState"
+PILOT_STATE_DISCONNECTED = "A"
+PILOT_STATE_CONNECTED = "B"
+PILOT_STATE_CHARGING = "C"
+
+# Session state
+SESSION_NOT_CHARGING = "NotCharging"
+SESSION_CHARGING = "Charging"
+SESSION_COMPLETED = "Completed"
+
+# Session constants
+SESSION_AMPERAGE = "amperage"
+SESSION_AMPERAGE_OFFERED = "amperageOffer"
+SESSION_VOLTAGE = "voltage"
+SESSION_ENERGY_TRANSFERRED_WH = "energyTransferredWh"
+SESSION_DURATION_MS = "durationMs"
+SESSION_START_DATE = "startDate"
