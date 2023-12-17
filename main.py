@@ -117,6 +117,8 @@ if __name__ == "__main__":
     hass_mqtt_username = os.environ.get('HASS_MQTT_USERNAME')
     hass_mqtt_password = os.environ.get('HASS_MQTT_PASSWORD')
 
+    print("Starting sync...")
+
     # Create the client
     client = FloX5Client(username, password)
 
