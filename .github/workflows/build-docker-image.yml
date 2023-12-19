@@ -27,3 +27,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true 
+          tags: glavoie84/flo-x5-mqtt:main
