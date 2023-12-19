@@ -27,5 +27,5 @@ jobs:
           context: .
 #          platforms: linux/amd64,linux/arm64
           platforms: linux/arm64
-          push: false
-          tags: user/app:latest
+          push: true 
+          tags: glavoie84/flo-x5-mqtt:latest
