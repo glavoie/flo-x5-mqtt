@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: release
     steps:
+      - name: set version
+        run: |
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up QEMU
@@ -27,7 +30,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true 
-          tags: glavoie84/flo-x5-mqtt:${{ github.ref }},glavoie84/flo-x5-mqtt:latest
+          tags: glavoie84/flo-x5-mqtt:${{ VERSION }},glavoie84/flo-x5-mqtt:latest
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
