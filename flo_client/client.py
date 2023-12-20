@@ -1,17 +1,15 @@
-# Create a class representing a flo X5 restful api client using a common rest framework.
-# The client will cover the folowing endpoints:
-# https://emobility.flo.ca/v3.0/user/stations
-# - Gives the list of stations and their full configuration.
-# https://emobility.flo.ca/v3.0/user/sessions
-# - Gives the list of charging sessions for the authenticated user.
+"""Client for the flo X5 API."""
 
-import requests
+import logging
 import json
+import requests
+
 from datetime import datetime, timedelta
 from flo_client.auth import Auth
 from flo_client.consts import *
 
-class FloX5Client: 
+
+class FloX5Client:
     def __init__(self, username: str, password: str):
         self.next_refresh = datetime.now()
         self._auth = Auth(username, password)
@@ -22,17 +20,17 @@ class FloX5Client:
         # Refresh every minutes at most
         if datetime.now() < self.next_refresh:
             return
-        
+
         self._stations = self._get_stations()
         self._sessions = self._get_sessions()
 
-        self.next_refresh = datetime.now() + timedelta(seconds = REFRESH_DELAY_SECS)
+        self.next_refresh = datetime.now() + timedelta(seconds=REFRESH_DELAY_SECS)
 
     def _get_stations(self):
         resp = requests.get(STATIONS_URL, headers=self._get_headers())
         if resp.status_code != 200:
             raise Exception("Error getting stations.", resp.status_code, resp.text)
-        
+
         # Convert the result to a list of Station objects
         stations = json.loads(resp.text)
 
@@ -43,45 +41,49 @@ class FloX5Client:
         if resp.status_code != 200:
             raise Exception("Error getting sessions.", resp.status_code, resp.text)
         return resp.json()
-    
+
     def _get_headers(self):
         return {
-            "Accept": "*/*", 
-            "Authorization": "Bearer " + self._auth.get_access_token()
+            "Accept": "*/*",
+            "Authorization": "Bearer " + self._auth.get_access_token(),
         }
 
     def get_station_by_name(self, name: str):
         self._refresh()
         for station in self._stations:
             if station["information"]["name"] == name:
-                return station 
-            
+                return station
+
         return None
-            
+
     def get_session_by_id(self, id: str):
         self._refresh()
         for session in self._sessions:
             if session["station"]["id"] == id:
                 return session
-        
+
         return None
-    
+
     def is_station_online(self, station):
         if station is None:
             return False
-        
-        return station[STATUS_KEY][STATE_KEY] == STATE_AVAILABLE or station[STATUS_KEY][STATE_KEY] == STATE_INUSE
-    
+
+        return (
+            station[STATUS_KEY][STATE_KEY] == STATE_AVAILABLE
+            or station[STATUS_KEY][STATE_KEY] == STATE_INUSE
+        )
+
     def is_vehicle_connected(self, station):
         if station is None:
             return False
-        
-        return station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CONNECTED or \
-            station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CHARGING
-    
+
+        return (
+            station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CONNECTED
+            or station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CHARGING
+        )
+
     def is_vehicle_charging(self, station):
         if station is None:
             return False
-        
-        return station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CHARGING
 
+        return station[STATUS_KEY][PILOT_STATE_KEY] == PILOT_STATE_CHARGING
