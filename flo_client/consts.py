@@ -1,5 +1,9 @@
 """Constants for the flo X5 client."""
 
+# Base constants
+REFRESH_DELAY_SECS = 60
+DATA_FOLDER = "data"
+
 # Base URL for API requests.
 BASE_URL = "https://emobility.flo.ca"
 STATIONS_URL = BASE_URL + "/v3.0/user/stations"

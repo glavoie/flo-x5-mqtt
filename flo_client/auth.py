@@ -25,8 +25,8 @@ class Auth:
         if self.access_token is None or self.is_access_token_expired():
             # Check if refresh token is available
             try:
-                if os.path.exists("./data/refresh.json"):
-                    with open("./data/refresh.json", "r") as f:
+                if os.path.exists("./" + DATA_FOLDER + "/refresh.json"):
+                    with open("./" + DATA_FOLDER + "/refresh.json", "r") as f:
                         refresh_token = json.load(f)
                         if "refresh_token" in refresh_token:
                             self.__execute_refresh_flow(refresh_token["refresh_token"])
@@ -72,7 +72,7 @@ class Auth:
         )
 
         # Save the access_token in json format in a file named refresh.json
-        with open("./data/refresh.json", "w") as f:
+        with open("./" + DATA_FOLDER + "/refresh.json", "w") as f:
             refresh_token = {"refresh_token": resp_dict["refresh_token"]}
             json.dump(refresh_token, f, indent=4)
 
@@ -173,6 +173,6 @@ class Auth:
         )
 
         # Save the access_token in json format in a file named refresh.json
-        with open("./data/refresh.json", "w") as f:
+        with open("./" + DATA_FOLDER + "/refresh.json", "w") as f:
             refresh_token = {"refresh_token": resp_dict["refresh_token"]}
             json.dump(refresh_token, f, indent=4)

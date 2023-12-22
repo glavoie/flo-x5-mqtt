@@ -52,6 +52,9 @@ class FloX5Device:
 
         station = self.client.get_station_by_name(self.station_name)
 
+        if station is None:
+            raise Exception("Station not found: " + self.station_name)
+
         self.logger.info(
             "Creating device for station: " + station["information"]["name"]
         )
@@ -180,12 +183,12 @@ class FloX5Device:
         return self.client.get_session_by_id(station_id)
 
     def _save_last_session_id(session_id: str):
-        with open("./data/last-session", "w") as f:
+        with open("./" + DATA_FOLDER + "/last-session", "w") as f:
             f.write(session_id)
 
     def _get_last_session_id():
-        if os.path.exists("./data/last-session"):
-            with open("./data/last-session", "r") as f:
+        if os.path.exists("./" + DATA_FOLDER + "/last-session"):
+            with open("./" + DATA_FOLDER + "/last-session", "r") as f:
                 return f.read()
 
         return None
