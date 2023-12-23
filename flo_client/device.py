@@ -182,11 +182,11 @@ class FloX5Device:
 
         return self.client.get_session_by_id(station_id)
 
-    def _save_last_session_id(session_id: str):
+    def _save_last_session_id(self, session_id: str):
         with open("./" + DATA_FOLDER + "/last-session", "w") as f:
             f.write(session_id)
 
-    def _get_last_session_id():
+    def _get_last_session_id(self):
         if os.path.exists("./" + DATA_FOLDER + "/last-session"):
             with open("./" + DATA_FOLDER + "/last-session", "r") as f:
                 return f.read()
