@@ -160,3 +160,38 @@
         "voltage": 238.6
     }
 ]
+
+# 5. Scheduled restriction active
+[
+    {
+        "amperage": 0.0,
+        "amperageOffer": 0.0,
+        "cost": {
+            "currency": "CAD",
+            "estimatedCost": 0
+        },
+        "durationMs": 10000,
+        "energyTransferredWh": 3.788736,
+        "id": "8aa2caf8-1925-46e1-a456-bc94d32707d5",
+        "lastRefreshMs": 1702815945857,
+        "restrictions": {
+            "activeRestriction": "PowerRestrictionSchedule",
+            "appliedRestrictions": [
+                "PowerRestrictionSchedule"
+            ],
+            "powerSharingMode": "None"
+        },
+        "sessionState": "NotCharging",
+        "startDate": "2023-12-17T12:25:34+00:00",
+        "station": {
+            "id": "bee0d412-17c5-4e49-8746-b76d7a3e2e93",
+            "level": "L2",
+            "model": "AddEnergie_SmartHOME_v1",
+            "name": "AAE-00123",
+            "networkId": 0,
+            "parkName": "SmartHome Beta Élargi",
+            "power": 7200
+        },
+        "voltage": 238.6
+    }
+]
