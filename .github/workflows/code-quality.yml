@@ -10,6 +10,6 @@ jobs:
       with:
         python-version: "3.11"
     - run: pip install --upgrade pip
-    - run: pip install mypy requests ha_mqtt_discoverable pkce
-    - run: mypy --install-types
+    - run: pip install mypy
+    - run: mypy main.py --install-types
     - run: mypy main.py
