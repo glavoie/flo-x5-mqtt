@@ -5,8 +5,8 @@ import logging
 
 from flo_client.client import FloX5Client
 from flo_client.consts import *
-from ha_mqtt_discoverable import Settings, DeviceInfo
-from ha_mqtt_discoverable.sensors import (
+from ha_mqtt_discoverable import Settings, DeviceInfo  # type: ignore
+from ha_mqtt_discoverable.sensors import (  # type: ignore
     BinarySensor,
     BinarySensorInfo,
     Sensor,
@@ -24,24 +24,24 @@ class FloX5Device:
         station_name: str,
         hass_mqtt_host: str,
         hass_mqtt_port: str,
-        hass_mqtt_username: str,
-        hass_mqtt_password: str,
-    ):
-        self.username = username
-        self.password = password
-        self.station_name = station_name
-        self.hass_mqtt_host = hass_mqtt_host
-        self.hass_mqtt_port = hass_mqtt_port
-        self.hass_mqtt_username = hass_mqtt_username
-        self.hass_mqtt_password = hass_mqtt_password
+        hass_mqtt_username: str | None,
+        hass_mqtt_password: str | None,
+    ) -> None:
+        self.username: str = username
+        self.password: str = password
+        self.station_name: str = station_name
+        self.hass_mqtt_host: str = hass_mqtt_host
+        self.hass_mqtt_port: str = hass_mqtt_port
+        self.hass_mqtt_username: str | None = hass_mqtt_username
+        self.hass_mqtt_password: str | None = hass_mqtt_password
 
-        self.logger = logging.getLogger(__name__)
+        self.logger: logging.Logger = logging.getLogger(__name__)
 
-        self.client = FloX5Client(username, password)
+        self.client: FloX5Client = FloX5Client(username, password)
         self._initialize_device()
         self._initialize_sensors()
 
-    def _initialize_device(self):
+    def _initialize_device(self) -> None:
         # Configure the required parameters for the MQTT broker
         self.mqtt_settings = Settings.MQTT(
             host=self.hass_mqtt_host,
@@ -67,7 +67,7 @@ class FloX5Device:
             identifiers=station["information"]["id"],
         )
 
-    def _initialize_sensors(self):
+    def _initialize_sensors(self) -> None:
         self.logger.info("Initializing sensors...")
 
         # Online sensor
@@ -173,34 +173,38 @@ class FloX5Device:
 
         self.energy_transferred_sensor = Sensor(energy_transferred_sensor_settings)
 
-    def _get_station(self):
+    def _get_station(self) -> dict | None:
         return self.client.get_station_by_name(self.station_name)
 
-    def _get_session(self):
+    def _get_session(self) -> dict | None:
         station = self._get_station()
+
+        if station is None:
+            return None
+
         station_id = station["information"]["id"]
 
         return self.client.get_session_by_id(station_id)
 
-    def _save_last_session_id(self, session_id: str):
+    def _save_last_session_id(self, session_id: str) -> None:
         with open("./" + DATA_FOLDER + "/last-session", "w") as f:
             f.write(session_id)
 
-    def _get_last_session_id(self):
+    def _get_last_session_id(self) -> str | None:
         if os.path.exists("./" + DATA_FOLDER + "/last-session"):
             with open("./" + DATA_FOLDER + "/last-session", "r") as f:
                 return f.read()
 
         return None
 
-    def update_all_sensors(self):
+    def update_all_sensors(self) -> None:
         self.logger.info("Updating sensors...")
 
         self.update_station_online_sensor()
         self.update_vehicle_connected_sensor()
         self.update_vehicle_charging_sensor()
 
-    def update_station_online_sensor(self):
+    def update_station_online_sensor(self) -> None:
         self.logger.debug("Updating station online sensor...")
 
         if self.client.is_station_online(self._get_station()):
@@ -208,7 +212,7 @@ class FloX5Device:
         else:
             self.online_sensor.off()
 
-    def update_vehicle_connected_sensor(self):
+    def update_vehicle_connected_sensor(self) -> None:
         self.logger.debug("Updating vehicle connected sensor...")
 
         if self.client.is_vehicle_connected(self._get_station()):
@@ -216,7 +220,7 @@ class FloX5Device:
         else:
             self.vehicle_connected_sensor.off()
 
-    def update_vehicle_charging_sensor(self):
+    def update_vehicle_charging_sensor(self) -> None:
         self.logger.debug("Updating vehicle charging sensor...")
 
         session = self._get_session()

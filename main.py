@@ -10,7 +10,7 @@ from flo_client.consts import *
 logger = logging.getLogger(__name__)
 
 
-def configure_logging(log_level):
+def configure_logging(log_level: str | None) -> None:
     level = logging.INFO
     if log_level:
         level = logging.getLevelName(log_level)
@@ -40,6 +40,18 @@ if __name__ == "__main__":
             + DATA_FOLDER
             + "'. Please create it and re-run the application."
         )
+
+    # Validate the environment variables, the MQTT username and password are optional.
+    if not username:
+        raise Exception("FLO_USERNAME environment variable not set.")
+    if not password:
+        raise Exception("FLO_PASSWORD environment variable not set.")
+    if not station_name:
+        raise Exception("FLO_STATION_NAME environment variable not set.")
+    if not hass_mqtt_host:
+        raise Exception("HASS_MQTT_HOST environment variable not set.")
+    if not hass_mqtt_port:
+        raise Exception("HASS_MQTT_PORT environment variable not set.")
 
     logger.info("Starting flo X5 to MQTT...")
     try:

@@ -13,15 +13,15 @@ from flo_client.consts import *
 
 
 class Auth:
-    def __init__(self, username: str, password: str):
+    def __init__(self, username: str, password: str) -> None:
         self.username: str = username
         self.password: str = password
-        self.access_token: str = None
+        self.access_token: str | None = None
         self.access_token_expiry: datetime = datetime.now()
 
-        self.logger = logging.getLogger(__name__)
+        self.logger: logging.Logger = logging.getLogger(__name__)
 
-    def get_access_token(self):
+    def get_access_token(self) -> str:
         if self.access_token is None or self.is_access_token_expired():
             # Check if refresh token is available
             try:
@@ -39,14 +39,17 @@ class Auth:
             except Exception as e:
                 self.logger.warn("Error executing full auth flow: ", e)
 
+        if self.access_token is None:
+            raise Exception("Error getting access token.")
+
         return self.access_token
 
-    def is_access_token_expired(self):
+    def is_access_token_expired(self) -> bool:
         if self.access_token_expiry is None:
             return True
         return self.access_token_expiry < datetime.now()
 
-    def __execute_refresh_flow(self, refresh_token: str):
+    def __execute_refresh_flow(self, refresh_token: str) -> None:
         self.logger.info("Refreshing access_token...")
 
         # Call the token endpoint
@@ -73,18 +76,21 @@ class Auth:
 
         # Save the access_token in json format in a file named refresh.json
         with open("./" + DATA_FOLDER + "/refresh.json", "w") as f:
-            refresh_token = {"refresh_token": resp_dict["refresh_token"]}
-            json.dump(refresh_token, f, indent=4)
+            refresh_token_file_content = {"refresh_token": resp_dict["refresh_token"]}
+            json.dump(refresh_token_file_content, f, indent=4)
 
-    def __execute_full_auth_flow(self):
+    def __execute_full_auth_flow(self) -> None:
         self.logger.info("Executing full authentication flow...")
 
         # Generate a code_verifier and code_challenge
         code_verifier, code_challenge = generate_pkce_pair()
 
         # Call the authorize endpoint
-        headers = {"Accept": "*/*", "Content-Type": "application/x-www-form-urlencoded"}
-        body = {
+        authorize_request_headers = {
+            "Accept": "*/*",
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+        authorize_request_body = {
             "client_id": CLIENT_ID,
             "response_mode": "pi.flow",
             "response_type": "code",
@@ -92,7 +98,11 @@ class Auth:
             "code_challenge_method": "S256",
             "code_challenge": code_challenge,
         }
-        resp = requests.post(IDP_AUTHORIZE_URL, headers=headers, data=body)
+        resp = requests.post(
+            IDP_AUTHORIZE_URL,
+            headers=authorize_request_headers,
+            data=authorize_request_body,
+        )
 
         if resp.status_code != 200:
             raise Exception(
@@ -102,20 +112,24 @@ class Auth:
             )
 
         resp_dict = resp.json()
-        usernamePasswordUrl = None
+        usernamePasswordUrl: str
         if resp_dict["status"] == "USERNAME_PASSWORD_REQUIRED":
             usernamePasswordUrl = resp_dict["_links"]["usernamePassword.check"]["href"]
 
         # Call the usernamePasswordUrl
-        headers = {
+        userpass_request_headers = {
             "Accept": "*/*",
             "Content-Type": "application/vnd.pingidentity.usernamePassword.check+json",
         }
 
         # Post credentials as a json body with the username and password values
-        body = {"username": self.username, "password": self.password}
+        userpass_request_body = {"username": self.username, "password": self.password}
 
-        resp = requests.post(usernamePasswordUrl, headers=headers, json=body)
+        resp = requests.post(
+            usernamePasswordUrl,
+            headers=userpass_request_headers,
+            json=userpass_request_body,
+        )
 
         if resp.status_code != 200:
             raise Exception(
@@ -128,16 +142,16 @@ class Auth:
         cookies = resp.cookies
 
         resp_dict = resp.json()
-        resumeUrl = None
+        resumeUrl: str
         if resp_dict["status"] == "COMPLETED":
             resumeUrl = resp_dict["resumeUrl"]
 
         # Call the resumeUrl
-        headers = {
+        resume_request_headers = {
             "Accept": "*/*",
             "Content-Type": "application/vnd.pingidentity.user.register+json",
         }
-        resp = requests.get(resumeUrl, headers=headers, cookies=cookies)
+        resp = requests.get(resumeUrl, headers=resume_request_headers, cookies=cookies)
 
         if resp.status_code != 200:
             raise Exception(
@@ -150,15 +164,20 @@ class Auth:
             code = resp.json()["authorizeResponse"]["code"]
 
         # Call the token endpoint
-        headers = {"Accept": "*/*", "Content-Type": "application/x-www-form-urlencoded"}
-        body = {
+        token_request_headers = {
+            "Accept": "*/*",
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+        token_request_body = {
             "code": code,
             "code_verifier": code_verifier,
             "client_id": CLIENT_ID,
             "grant_type": "authorization_code",
         }
 
-        resp = requests.post(IDP_TOKEN_URL, headers=headers, data=body)
+        resp = requests.post(
+            IDP_TOKEN_URL, headers=token_request_headers, data=token_request_body
+        )
 
         if resp.status_code != 200:
             raise Exception(
@@ -174,5 +193,5 @@ class Auth:
 
         # Save the access_token in json format in a file named refresh.json
         with open("./" + DATA_FOLDER + "/refresh.json", "w") as f:
-            refresh_token = {"refresh_token": resp_dict["refresh_token"]}
-            json.dump(refresh_token, f, indent=4)
+            refresh_token_file_content = {"refresh_token": resp_dict["refresh_token"]}
+            json.dump(refresh_token_file_content, f, indent=4)
