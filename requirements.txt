@@ -1,0 +1,4 @@
+ha-mqtt-discoverable==0.13.0
+requests==2.31.0
+types-requests==2.31.0
+pkce==1.0.3
