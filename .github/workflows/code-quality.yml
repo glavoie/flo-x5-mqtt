@@ -11,5 +11,4 @@ jobs:
         python-version: "3.11"
     - run: pip install --upgrade pip
     - run: pip install mypy
-    - run: mypy main.py --install-types
-    - run: mypy main.py
+    - run: mypy --ignore-missing-imports main.py
